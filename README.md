@@ -114,10 +114,17 @@ Queries:
 
 - DIM_DATE.sql
 - DIM_CUSTOMER.sql
-- DIM_Product
+- DIM_PRODUCT.sql
 
 Result tables:
 
 - DIM_DATE.csv
 - DIM_CUSTOMER.csv
-- DIM_Product
+- DIM_PRODUCT.csv
+
+
+#### SQL query formatting
+
+Used this website:
+https://www.red-gate.com/website/sql-formatter
+
