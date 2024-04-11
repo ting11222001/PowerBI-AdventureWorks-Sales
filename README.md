@@ -8,7 +8,7 @@
 4. Creating Dashboards
 
 
-## Prepare the Data
+## Setup Sample Dataset
 
 ### Data source
 
@@ -77,9 +77,9 @@ Steven
 | 4  | Sales Manager          | A dashboard overview of internet sales       | Follow sales over time against budget                | A Power Bi dashboard with graphs and KPIs comparing against budget |
 
 
-### Data tables
+## Data Cleaning & Transformation
 
-#### Fact Table vs Dimension Table in Data Warehouse Modeling
+### Fact Table vs Dimension Table in Data Warehouse Modeling
 
 Fact Table:
 
@@ -97,7 +97,7 @@ Dimension Table:
 - Dimension Tables are often smaller in size compared to Fact Tables but can have many rows.
 - Example: Continuing with the retail store example, Dimension Tables could include tables for Product, Customer, Time, and Store Location. Each row in the Product Dimension Table could represent a unique product sold in the store, with columns such as ProductID, ProductName, Category, and Manufacturer.
 
-#### Identify Necessary Tables
+### Identify Necessary Tables
 
 From the sample requests, the tables I need could be:
 
@@ -106,7 +106,7 @@ From the sample requests, the tables I need could be:
 - DIMCustomer
 
 
-#### Data Transformation
+### Data Transformation
 
 I used several SQL query to pick the attributes columns I need and reformat the value such as giving a shorter Month name for the Month column, etc. and export the transformed result into .csv files.
 
@@ -130,3 +130,35 @@ Result tables:
 Used this website:
 https://www.red-gate.com/website/sql-formatter
 
+
+## Creating Dashboards
+
+### Load Data & Create Data Model
+
+Add Screenshot here!
+
+In Power BI "" tab, I explicitly connected these keys into relationships:
+
+```bash
+DIM_CUSTOMER "CustomerKey" -> FACT_INTERNETSALES "CustomerKey"
+DIM_DATE "DateKey" -> FACT_INTERNETSALES "OrderDateKey"
+DIM_PRODUCT "ProductKey" -> FACT_INTERNETSALES "ProductKey"
+SalesBudget.xlsx has been renamed into FACT_BUDGET and its "Date" -> DIM_DATE "Date"
+```
+
+In Power BI "Report View" tab, I created these new measures for each table:
+
+```bash
+FACT_INTERNETSALES: 
+  Sales = SUM(FACT_INTERNETSALES[SalesAmount])
+FACT_BUDGET: 
+  Budget Amount = SUM(FACT_BUDGET[Budget])
+  Sales / Budget Amount = DIVIDE([Sales], [Budget Amount]) -> Then choose "%"
+
+  
+Also, for DIM_CUSTOMER "CustomerKey" column, I set its "Data Category" into "City".
+```
+
+### Dashboard Design Process
+
+### Publish & Share Report
