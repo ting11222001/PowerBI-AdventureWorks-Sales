@@ -115,12 +115,14 @@ Queries:
 - DIM_DATE.sql
 - DIM_CUSTOMER.sql
 - DIM_PRODUCT.sql
+- FACT_INTERNETSALES.sql
 
 Result tables:
 
 - DIM_DATE.csv
 - DIM_CUSTOMER.csv
 - DIM_PRODUCT.csv
+- FACT_INTERNETSALES.csv
 
 
 #### SQL query formatting
