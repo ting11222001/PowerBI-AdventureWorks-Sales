@@ -1,4 +1,14 @@
-# PowerBI-AdventureWorks-Sales
+# Sales Management DashboardPowerBI-AdventureWorks-Sales
+
+## Table of Contents
+
+- [Thought Process](#thought-process)
+- [Setup Sample Dataset](#setup-sample-dataset)
+- [Business Request](#business-request)
+- [Data Cleaning & Transformation](#data-cleaning-&-transformation)
+- [Creating Dashboards](#creating-dashboards)
+- [Publish & Share Report](#publish-&-share-report)
+- [Demo](#demo)
 
 ## Thought Process
 
@@ -161,4 +171,26 @@ Also, for DIM_CUSTOMER "CustomerKey" column, I set its "Data Category" into "Cit
 
 ### Dashboard Design Process
 
-### Publish & Share Report
+#### Formatting Tips
+
+```bash
+shift + arrow-down = each visual element move downwards by 5 pixels.
+```
+
+#### Import more visuals 
+
+Download the visual from Microsoft AppSource and then import it to the Power BI Desktop:
+
+```bash
+Go to Microsoft AppSource: https://appsource.microsoft.com/en-US/home
+Search "Dynamic KPI Card by Sereviso"
+```
+
+## Publish & Share Report
+
+You may check my outputs:
+
+- SalesDashboard.pbix
+- SalesDashboard.pdf
+
+## Demo
