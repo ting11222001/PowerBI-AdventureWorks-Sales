@@ -1,6 +1,6 @@
 -- Cleansed DIM_Customers Table --
 
-SELECT 
+SELECT
 	c.customerKey AS CustomerKey, 
 	-- ,[GeographyKey]
     c.geographyKey AS GeographyKey,

@@ -1,49 +1,53 @@
-# Sales Management DashboardPowerBI-AdventureWorks-Sales
+# Sales Management Dashboard
+
+This project revolves around the development of a sales management dashboard using Power BI, utilizing open-source data from the Microsoft AdventureWorks database. The process entails data cleaning and transformation through SQL. Initially, I analyzed a sample business request, envisioned potential user stories, and based on these requirements, cleaned the data and designed the dashboard.
 
 ## Table of Contents
 
 - [Thought Process](#thought-process)
-- [Setup Sample Dataset](#setup-sample-dataset)
+- [Setting Up Sample Dataset](#setting-up-sample-dataset)
 - [Business Request](#business-request)
 - [Data Cleaning & Transformation](#data-cleaning-&-transformation)
 - [Creating Dashboards](#creating-dashboards)
-- [Publish & Share Report](#publish-&-share-report)
+- [Publishing & Sharing the Report](#publishing-&-sharing-the-report)
 - [Demo](#demo)
 
 ## Thought Process
 
-1. Setup Sample Dataset
-2. Check Business Request
+1. Setting Up Sample Dataset
+2. Reviewing the Business Request
 3. Data Cleaning & Transformation
-4. Creating Dashboards
+4. Dashboard Creation
 
-
-## Setup Sample Dataset
+## Setting Up Sample Dataset
 
 ### Data source
 
-AdventureWorks DBs: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver15&tabs=ssms
+AdventureWorks DBs: [AdventureWorks](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure?view=sql-server-ver15&tabs=ssms)
 
-Downloaded the "Data Warehouse" and "Lightweight" version of 2022 datasets.
+Downloaded the "Data Warehouse" and "Lightweight" versions of the 2022 datasets.
 
-### Restore to AdventureWorks Database in SQL Server
+### Restoring to AdventureWorks Database in SQL Server
 
-I used the .bak file to the your sample database to my SQL Server instance. I used the graphical interface (GUI) in SQL Server Management Studio (SSMS).
+I utilized the .bak file to restore the sample database to my SQL Server instance, employing the graphical interface (GUI) in SQL Server Management Studio (SSMS).
 
 
-### Update AdventureWorksDW Data with a SQL script
+### Updating AdventureWorksDW Data with a SQL Script
 
-Script source: https://github.com/techtalkcorner/SampleDemoFiles/blob/master/Database/AdventureWorks/Update_AdventureWorksDW_Data.sql
+The original DimDate table looked like this:
 
-The script updates the date colums for the AdventureWorksDW database with recent dates and it inserts new dates in the date dimension. 
+![Original-Date-Table.png](Images/Original-Date-Table.png)
 
-It uses the current year as the last year for the data in the Adventure Works database.
+Script source: [Update_AdventureWorksDW_Data.sql](https://github.com/techtalkcorner/SampleDemoFiles/blob/master/Database/AdventureWorks/Update_AdventureWorksDW_Data.sql)
 
-After executed, double check using the `DimDate` table:
+The script updates the date columns for the AdventureWorksDW database with recent dates and inserts new dates into the date dimension. It uses the current year as the latest year (i.e. current it's 2024) for the data in the Adventure Works database. After execution, I double-checked using the DimDate table:
+
 ```bash
 SELECT DISTINCT CalendarYear
   FROM [AdventureWorksDW2022].[dbo].[DimDate]
 ```
+
+![Check-Distinct-Year.png](Images/Check-Distinct-Year.png)
 
 ## Business Request
 
@@ -68,14 +72,21 @@ Cheers,
 Steven
 ```
 
+### Sample Budget Data
+
+```bash
+Send_Over_Data
+    └── SalesBudget.xlsx
+```
+
 ### Sample Requirements
 
 ##### Business Demand Overview
 
-- Reporter: Steven – Sales Manager
-- Value of Change: Visual dashboards and improved Sales reporting or follow up or sales force
-- Necessary Systems: Power BI, CRM System
-- Other Relevant Info: Budgets have been delivered in Excel for 2024
+- Requestor: Steven – Sales Manager
+- Purpose: Enhanced Sales reporting through visual dashboards
+- Required Systems: Power BI, CRM System
+- Additional Information: Budget data for 2024 provided in Excel format
 
 ##### User Stories (Sales Dashboard Requirements)
 
@@ -93,23 +104,22 @@ Steven
 
 Fact Table:
 
-- A Fact Table contains quantitative data, often referred to as facts or measures, related to a business process or event.
-- Each row in a Fact Table represents a specific instance or occurrence of the event being measured.
-- Fact Tables typically contain numerical values, such as sales amounts, quantities sold, or durations.
-- Fact Tables are associated with multiple Dimension Tables through foreign key relationships.
+- Contains quantitative data, often referred to as facts or measures, related to a business process or event.
+- Each row represents a specific instance or occurrence of the event being measured.
+- Typically contains numerical values, such as sales amounts or quantities sold.
+- Associated with multiple Dimension Tables through foreign key relationships.
 - Example: Consider a Fact Table that records sales transactions in a retail store. Each row in this Fact Table could represent a single sale, with columns indicating details such as the sales amount, quantity sold, date, store location, and product sold.
 
 Dimension Table:
 
-- A Dimension Table contains descriptive attributes or characteristics associated with the facts in a Fact Table.
-- Dimension Tables provide context to the quantitative data stored in the Fact Table, allowing users to analyze and understand the data more effectively.
-- Each row in a Dimension Table represents a unique category or entity, and it typically contains textual or categorical data.
-- Dimension Tables are often smaller in size compared to Fact Tables but can have many rows.
+- Contains descriptive attributes or characteristics associated with the facts in a Fact Table.
+- Provides context to the quantitative data stored in the Fact Table.
+- Each row represents a unique category or entity and typically contains textual or categorical data.
 - Example: Continuing with the retail store example, Dimension Tables could include tables for Product, Customer, Time, and Store Location. Each row in the Product Dimension Table could represent a unique product sold in the store, with columns such as ProductID, ProductName, Category, and Manufacturer.
 
-### Identify Necessary Tables
+### Identifying Necessary Tables
 
-From the sample requests, the tables I need could be:
+Based on the sample requests, the required tables could be:
 
 - DIMDate
 - DIMProduct
@@ -118,36 +128,58 @@ From the sample requests, the tables I need could be:
 
 ### Data Transformation
 
-I used several SQL query to pick the attributes columns I need and reformat the value such as giving a shorter Month name for the Month column, etc. and export the transformed result into .csv files.
+I employed several SQL queries to select the necessary attribute columns and reformat the values, such as abbreviating month names. The transformed results were then exported into .csv files.
 
 Queries:
 
-- DIM_DATE.sql
-- DIM_CUSTOMER.sql
-- DIM_PRODUCT.sql
-- FACT_INTERNETSALES.sql
+```bash
+SQL_Script
+    ├── DIM_CUSTOMER.sql
+    ├── DIM_DATE.sql
+    ├── DIM_PRODUCT.sql
+    └── FACT_INTERNETSALES.sql
+```
 
-Result tables:
+DIM_CUSTOMER.sql:
+![Customer-Query.png](Images/Customer-Query.png)
 
-- DIM_DATE.csv
-- DIM_CUSTOMER.csv
-- DIM_PRODUCT.csv
-- FACT_INTERNETSALES.csv
+FACT_INTERNETSALES.sql
+![Internet-Sales-Query.png](Images/Internet-Sales-Query.png)
 
+DIM_PRODUCT.sql:
+- The original product table looks like this:
+![Original-DIM-Product.png](Images/Original-DIM-Product.png)
+
+- Then I wanted to join the product table with other tables e.g. the product subcategory table.
+![DIM-Product-Subcategory.png](Images/DIM-Product-Subcategory.png) 
+
+- At row 210, the product subcategory key was 14, and now it's correctly replaced with "Road Frames" from the product subcategory table:
+![DIM-Product-Joined.png](Images/DIM-Product-Joined.png)
+
+
+Result tables are saved in here:
+
+```bash
+Exported_Data
+    ├── DIM_DATE.csv
+    ├── DIM_CUSTOMER.csv
+    ├── DIM_PRODUCT.csv
+    └── FACT_INTERNETSALES.csv
+```
 
 #### SQL query formatting
 
-Used this website:
-https://www.red-gate.com/website/sql-formatter
-
+I utilized the following website for SQL query formatting: [SQL Formatter](https://www.red-gate.com/website/sql-formatter)
 
 ## Creating Dashboards
 
-### Load Data & Create Data Model
+### Loading Data & Creating Data Model
 
-Add Screenshot here!
+First of all, I imported all the result tables from above into Power BI:
 
-In Power BI "" tab, I explicitly connected these keys into relationships:
+![Imported-Data.png](Images/Imported-Data.png)
+
+In the Power BI "Model View" tab, I established explicit relationships between the following keys:
 
 ```bash
 DIM_CUSTOMER "CustomerKey" -> FACT_INTERNETSALES "CustomerKey"
@@ -156,18 +188,18 @@ DIM_PRODUCT "ProductKey" -> FACT_INTERNETSALES "ProductKey"
 SalesBudget.xlsx has been renamed into FACT_BUDGET and its "Date" -> DIM_DATE "Date"
 ```
 
-In Power BI "Report View" tab, I created these new measures for each table:
+![Data-Model.png](Images/Data-Model.png)
+
+In the Power BI "Report View" tab, I created the following new key measures from the tables:
 
 ```bash
-FACT_INTERNETSALES: 
-  Sales = SUM(FACT_INTERNETSALES[SalesAmount])
-FACT_BUDGET: 
-  Budget Amount = SUM(FACT_BUDGET[Budget])
-  Sales / Budget Amount = DIVIDE([Sales], [Budget Amount]) -> Then choose "%"
-
-  
-Also, for DIM_CUSTOMER "CustomerKey" column, I set its "Data Category" into "City".
+Sales = SUM(FACT_INTERNETSALES[SalesAmount])
+Budget Amount = SUM(FACT_BUDGET[Budget])
+Sales / Budget Amount = DIVIDE([Sales], [Budget Amount]) -> Then choose "%"
+Sales - Budget Amount = [Sales] - [Budget Amount]
 ```
+
+Also, for DIM_CUSTOMER "Customer City" column, I set its "Data Category" into "City", so that I can correctly add "Map" visual elements later.
 
 ### Dashboard Design Process
 
@@ -177,7 +209,7 @@ Also, for DIM_CUSTOMER "CustomerKey" column, I set its "Data Category" into "Cit
 shift + arrow-down = each visual element move downwards by 5 pixels.
 ```
 
-#### Import more visuals 
+#### Importing Additional Visual
 
 Download the visual from Microsoft AppSource and then import it to the Power BI Desktop:
 
@@ -186,11 +218,21 @@ Go to Microsoft AppSource: https://appsource.microsoft.com/en-US/home
 Search "Dynamic KPI Card by Sereviso"
 ```
 
-## Publish & Share Report
+## Publishing & Sharing the Report
 
-You may check my outputs:
+You may see my dashboard in your Power BI desktop app using the .pbix file or check out the static version in .pdf:
 
-- SalesDashboard.pbix
-- SalesDashboard.pdf
+```bash
+Demo
+    ├── SalesDashboard.pbix
+    └── SalesDashboard.pdf
+```
 
 ## Demo
+
+![Sales-Overview.png](/Images/Sales-Overview.png)
+
+![Customer-Details.png](/Images/Customer-Details.png)
+
+![Product-Details.png](/Images/Product-Details.png)
+
